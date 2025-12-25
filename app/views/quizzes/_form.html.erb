@@ -21,6 +21,36 @@
     <%= form.text_area :description %>
   </div>
 
+  <h3>Questions</h3>
+  <%= form.fields_for :questions do |qf| %>
+    <div style="margin-bottom: 20px; padding: 10px; border: 1px solid #ccc;">
+      <div>
+        <%= qf.label :content, "Question Content", style: "display: block" %>
+        <%= qf.text_area :content %>
+      </div>
+
+      <div>
+        <%= qf.label :question_type, "Question Type", style: "display: block" %>
+        <%= qf.select :question_type, Question.question_types.keys.map { |type| [type.humanize, type] } %>
+      </div>
+
+      <h4>Options</h4>
+      <%= qf.fields_for :options do |of| %>
+        <div style="margin-bottom: 10px;">
+          <div>
+            <%= of.label :content, "Option Content", style: "display: block" %>
+            <%= of.text_field :content %>
+          </div>
+
+          <div>
+            <%= of.label :is_correct, "Is Correct?" %>
+            <%= of.check_box :is_correct %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
   <div>
     <%= form.submit %>
   </div>
