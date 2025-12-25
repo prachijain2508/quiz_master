@@ -13,6 +13,8 @@ class QuizzesController < ApplicationController
   # GET /quizzes/new
   def new
     @quiz = Quiz.new
+    question = @quiz.questions.build
+    2.times { question.options.build }
   end
 
   # GET /quizzes/1/edit
@@ -65,6 +67,6 @@ class QuizzesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def quiz_params
-      params.require(:quiz).permit(:title, :description)
+      params.require(:quiz).permit(:title, :description, questions_attributes: [:id, :content, :question_type, :_destroy, options_attributes: [:id, :content, :is_correct, :_destroy]])
     end
 end
